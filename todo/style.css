@@ -45,3 +45,7 @@ body {
 .task-done {
   text-decoration: line-through;
 }
+
+.changeBg {
+  background-color: gainsboro;
+}
