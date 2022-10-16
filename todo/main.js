@@ -20,8 +20,13 @@ let taskList = [];
 addButton.addEventListener('click', addTask);
 
 function addTask() {
-  let taskContent = taskInput.value;
-  taskList.push(taskContent);
+  let task = {
+    id: generateId(),
+    taskContent: taskInput.value,
+    isComplete: false,
+  };
+  taskList.push(task);
+  console.log(taskList);
   render();
 }
 
@@ -29,14 +34,49 @@ function addTask() {
 function render() {
   let resultHTML = '';
   for (let i = 0; i < taskList.length; i++) {
-    resultHTML += `<div class="task">
-		<div>${taskList[i]}</div>
-		<div>
-			<button>Check</button>
-			<button>Delete</button>
-		</div>
-	</div>`;
+    if (taskList[i].isComplete == true) {
+      resultHTML += `<div class="task">
+			<div class="task-done">${taskList[i].taskContent}</div>
+			<div>
+				<button onclick="toggleComplete('${taskList[i].id}')">Check</button>
+				<button>Delete</button>
+			</div>
+		</div>`;
+    } else {
+      resultHTML += `<div class="task">
+			<div>${taskList[i].taskContent}</div>
+			<div>
+				<button onclick="toggleComplete('${taskList[i].id}')">Check</button>
+				<button onclick="deleteTask()">Delete</button>
+			</div>
+		</div>`;
+    }
   }
 
   taskBoard.innerHTML = resultHTML;
+}
+
+function toggleComplete(id) {
+  for (let i = 0; i < taskList.length; i++) {
+    if (taskList[i].id == id) {
+      taskList[i].isComplete = !taskList[i].isComplete;
+      break;
+    }
+  }
+  render();
+}
+function deleteTask() {
+  console.log('삭제하자');
+}
+
+//랜덤id 생성: https://gist.github.com/gordonbrander/2230317
+function generateId() {
+  let a = new Uint32Array(3);
+  window.crypto.getRandomValues(a);
+  return (
+    performance.now().toString(36) +
+    Array.from(a)
+      .map(A => A.toString(36))
+      .join('')
+  ).replace(/\./g, '');
 }
