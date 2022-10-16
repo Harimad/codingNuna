@@ -1,0 +1,78 @@
+/* CSS 로직
+1. container 클래스가 높이 100vh로
+2. 인풋 + 버튼 태그를 붙이기
+3. All, Not Done, Done 영역에 밑줄 넣기
+4. Todo 리스트 영역엥 flex를 주고 간격 벌리기
+5. 반응형으로 만들기
+*/
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+p {
+  margin: 0px;
+}
+
+body {
+  background: url(background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container {
+  background-color: white;
+  min-height: 100vh;
+  border-top: 5px solid burlywood;
+  border-bottom: 5px solid burlywood;
+}
+
+.contents {
+  border: 1px solid cornflowerblue;
+  position: relative;
+}
+
+#underline {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  height: 4px;
+  width: 35px;
+  background-color: coral;
+}
+
+.todo-status {
+  display: flex;
+  padding: 10px;
+}
+
+.todo-status div {
+  margin-right: 12px;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid cornflowerblue;
+  padding: 10px;
+}
+
+.done-task {
+  text-decoration: line-through;
+}
+
+.finished {
+  background-color: gainsboro;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 570px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 760px;
+  }
+}
