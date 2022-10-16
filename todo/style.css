@@ -49,3 +49,7 @@ body {
 .changeBg {
   background-color: gainsboro;
 }
+
+.task-tabs div {
+  cursor: pointer;
+}
