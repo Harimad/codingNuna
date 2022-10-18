@@ -1,0 +1,90 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-image: url(backgroundImg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  font-weight: bold;
+}
+button {
+  border: none;
+  outline: 0;
+}
+.container {
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+#task-board {
+  display: flex;
+  position: relative;
+}
+
+#task-board p {
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+#underline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 4px;
+  background-color: pink;
+  transition: 0.5s;
+}
+
+#task-lists {
+  border: 2px solid bisque;
+  border-radius: 12px;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  animation: bgchange 10s infinite;
+}
+
+.finished {
+  text-decoration: line-through;
+}
+
+.toggleBg {
+  background-color: darkslategray;
+  animation: none;
+}
+
+@keyframes bgchange {
+  0% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  20% {
+    background-color: lightskyblue;
+  }
+
+  40% {
+    background-color: tomato;
+  }
+
+  60% {
+    background-color: chartreuse;
+  }
+
+  80% {
+    background-color: crimson;
+  }
+
+  100% {
+    background-color: lightslategray;
+  }
+}
