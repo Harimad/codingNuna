@@ -1,5 +1,15 @@
+.toggleAndSearch button {
+  border: none;
+  background-color: transparent;
+}
+
+.toggleMenu {
+  display: none;
+}
+
 .head-line {
   margin-top: 1em;
+  margin-bottom: 1em;
   display: flex;
   justify-content: center;
 }
@@ -9,12 +19,15 @@
 }
 
 .menus {
-  margin-top: 1em;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   border-top: 1px solid #ebebeb;
   border-bottom: 1px double black;
+}
+.menus button:first-child {
+  text-align: right;
+  display: none;
 }
 
 .menus button {
@@ -33,4 +46,33 @@
 .news-img {
   width: 100%;
   max-height: 250px;
+}
+
+@media (max-width: 576px) {
+  .toggleMenu {
+    display: inline;
+  }
+  .menus {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    flex-direction: column;
+    background: black;
+    transition: 0.5s;
+    overflow-x: hidden; /* Key Function! For Toggle Side Menu*/
+  }
+  .menus button:first-child {
+    display: block;
+  }
+  .menus button {
+    color: white;
+  }
+}
+
+@media (min-width: 577px) {
+  .menus {
+    width: 100%;
+  }
 }
