@@ -1,12 +1,20 @@
-.toggleAndSearch button {
-  border: none;
-  background-color: transparent;
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.toggleAndSearch {
+  margin-top: 1rem;
+  display: flex;
 }
 
 .toggleMenu {
   display: none;
 }
-
+.searchArea {
+  display: none;
+  padding: 3px;
+}
 .head-line {
   margin-top: 1em;
   margin-bottom: 1em;
@@ -61,6 +69,7 @@
     flex-direction: column;
     background: black;
     transition: 0.5s;
+    flex-wrap: nowrap;
     overflow-x: hidden; /* Key Function! For Toggle Side Menu*/
   }
   .menus button:first-child {

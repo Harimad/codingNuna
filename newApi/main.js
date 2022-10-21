@@ -12,7 +12,7 @@ const getLatestNews = async () => {
   news = data.articles;
   console.log(news);
 };
-getLatestNews();
+// getLatestNews();
 
 /*
 1. 사이드 메뉴
@@ -21,19 +21,13 @@ getLatestNews();
 	[O] mediaquery사용
 		[O] 모바일 사이즈에서 menu부분을 position:fixed & top:0 & left:0으로 설정
 - 햄버거 메뉴를 누르면 사이드메뉴가 나온다.
-
-2. 검색창 보이고 숨기기
-- 왼쪽 상단에 검색 아이콘을 붙인다
-- 검색 아이콘을 누르면 검색창이 나오고 다시 누르면 사라진다
-
-3. 현재 console에서만 보이는 news 데이터들을 UI에 그려보기
-- todo리스트에서 했던 render함수와 비슷함
 */
 
 const $toggleMenu = document.querySelector('#toggleMenu');
 const $search = document.querySelector('#search');
 const $closeBtn = document.querySelector('#closeBtn');
 const $menus = document.querySelector('#menus');
+const $searchArea = document.querySelector('#searchArea');
 
 $toggleMenu.addEventListener('click', e => {
   $menus.style.width = '250px';
@@ -50,3 +44,20 @@ window.addEventListener('resize', e => {
     $menus.style.width = '0px';
   }
 });
+
+// 2. 검색창 보이고 숨기기
+// - 왼쪽 상단에 검색 아이콘을 붙인다
+// - 검색 아이콘을 누르면 검색창이 나오고 다시 누르면 사라진다
+
+$search.addEventListener('click', e => {
+  if ($searchArea.style.display == 'flex') {
+    $searchArea.style.display = '';
+  } else {
+    $searchArea.style.display = 'flex';
+  }
+});
+
+// 3. 현재 console에서만 보이는 news 데이터들을 UI에 그려보기
+// - todo리스트에서 했던 render함수와 비슷함
+
+getLatestNews();
