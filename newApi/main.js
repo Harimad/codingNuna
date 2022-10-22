@@ -93,11 +93,30 @@ const searchInputFunc = () => {
 const getNews = async () => {
   let req = new URL(url);
   let response = await fetch(req);
+  // console.log(response);
   let data = await response.json();
-  news = data.articles;
-  console.log(data);
-  console.log(news);
-  render();
+  // console.log(data);
+
+  try {
+    // 에러 핸들링 1. 받은 api데이터가 0개라면 화면에 No matches for your search 라는 메세지를 화면
+    if (data.totalResults == 0) {
+      throw new Error('No matches for your search');
+    }
+    // api데이터가 1개 이상 & 에러 코드 200이면
+    else if (response.status == 200) {
+      news = data.articles;
+      render();
+    } else {
+      // 에러 핸들링 2. 받은 응답의 코드가 200이 아니라면, (400,401,402 등 ) 받은 에러메세지를 화면에 보여주기
+      throw new Error(
+        `Error Status is "${response.status}" & ${data.message}!`
+      );
+    }
+  } catch (err) {
+    $articles.innerHTML = `<div class="alert alert-danger text-center" role="alert">
+			${err.message}
+			</div>`;
+  }
 };
 
 const getLatestNews = () => {
