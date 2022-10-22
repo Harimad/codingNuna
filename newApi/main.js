@@ -1,33 +1,14 @@
-// 한달에 50번 다 써서 못씀.
-// let news = [];
-// const getLatestNews = async () => {
-// let url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&topic=sport&page_size=10`);
-// let header = new Headers({
-//   'x-api-key': 'NHhmhsswltAdCYsRqKQaOZX_5XgKzCsxreKYRce6-Oo',
-// });
-// let response = await fetch(url, { headers: header });
-// let data = await response.json(); // 역시 서버에서 데이터를 뽑아야 하기때문에 await이 필요함.
-// news = data;
-// };
-// getLatestNews();
+const $toggleMenu = document.querySelector('#toggleMenu');
+const $search = document.querySelector('#search');
+const $closeBtn = document.querySelector('#closeBtn');
+const $menus = document.querySelector('#menus');
+const $searchArea = document.querySelector('#searchArea');
+const $articles = document.querySelector('#articles');
+const $categories = document.querySelectorAll('#menus .category');
 
 let news = [];
-const getNews = async () => {
-  var url =
-    'https://newsapi.org/v2/everything?' +
-    'q=Apple&' +
-    'from=2022-10-21&' +
-    'sortBy=popularity&' +
-    'apiKey=2431d4c166fb4546a136e11ab9ca36ed';
-
-  let req = new Request(url);
-  let response = await fetch(req);
-  let data = await response.json();
-  news = data.articles;
-  render();
-  console.log(news);
-};
-getNews();
+let url;
+let category;
 
 /*
 1. 사이드 메뉴
@@ -37,13 +18,6 @@ getNews();
 		[O] 모바일 사이즈에서 menu부분을 position:fixed & top:0 & left:0으로 설정
 - 햄버거 메뉴를 누르면 사이드메뉴가 나온다.
 */
-
-const $toggleMenu = document.querySelector('#toggleMenu');
-const $search = document.querySelector('#search');
-const $closeBtn = document.querySelector('#closeBtn');
-const $menus = document.querySelector('#menus');
-const $searchArea = document.querySelector('#searchArea');
-const $articles = document.querySelector('#articles');
 
 $toggleMenu.addEventListener('click', e => {
   $menus.style.width = '250px';
@@ -78,20 +52,73 @@ $search.addEventListener('click', e => {
 
 let result = '';
 const render = () => {
-  // FOREACH (Map 써도됨)
-  news.forEach(item => {
-    result += `<div class="row news">
-  	<div class="col-lg-4">
-  		<img class="news-img" src="${item.urlToImage}" alt="">
-  	</div>
-  	<div class="col-lg-8">
-  		<h2>${item.title}</h2>
-  		<p>${item.description}</p>
-  		<div>
-  			${item.author} - ${item.publishedAt}
-  		</div>
-  	</div>
-  </div>`;
+  result = news.map(item => {
+    return `<div class="row news">
+		 	<div class="col-lg-4">
+		 		<img class="news-img" src="${item.urlToImage}" alt="">
+		 	</div>
+		 	<div class="col-lg-8">
+		 		<h2>${item.title}</h2>
+		 		<p>${item.description}</p>
+		 		<div>
+		 			${item.author ? item.author : ''} - ${item.publishedAt}
+		 		</div>
+			</div>
+		</div>`;
   });
-  $articles.innerHTML = result;
+  $articles.innerHTML = result.join('');
 };
+
+// Get Date (format: YYYY-MM-DD)
+function dateFormat() {
+  let today = new Date();
+  let month = today.getMonth() + 1;
+  let day = today.getHours();
+
+  month = month >= 10 ? month : '0' + month;
+  day = day >= 10 ? day : '0' + day;
+
+  return `${today.getFullYear()}-${month}-${day}`;
+}
+
+const getNews = async () => {
+  let req = new URL(url);
+  let response = await fetch(req);
+  let data = await response.json();
+  news = data.articles;
+  console.log(data);
+  console.log(news);
+  render();
+};
+
+const getLatestNews = async () => {
+  url =
+    'https://newsapi.org/v2/everything?' +
+    'q=Apple&' +
+    `from=${dateFormat()}&` +
+    'sortBy=popularity&' +
+    'apiKey=2431d4c166fb4546a136e11ab9ca36ed';
+
+  getNews();
+};
+getLatestNews();
+
+const getNewsByCategory = e => {
+  category = e.target.textContent.toLowerCase();
+  console.log(category);
+  url = `
+		https://newsapi.org/v2/top-headlines
+		?country=kr
+		&from=${dateFormat()}
+		&category=${category}
+		&apiKey=2431d4c166fb4546a136e11ab9ca36ed`;
+
+  getNews();
+};
+
+// menus 버튼을 누르면 카테고리별로 뉴스 보여주기
+$categories.forEach(item => {
+  item.addEventListener('click', e => {
+    getNewsByCategory(e);
+  });
+});

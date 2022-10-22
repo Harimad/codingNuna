@@ -68,7 +68,7 @@
     height: 100%;
     width: 0;
     flex-direction: column;
-    background: black;
+    background: rgba(0, 02, 03, 0.7);
     transition: 0.5s;
     flex-wrap: nowrap;
     overflow-x: hidden; /* Key Function! For Toggle Side Menu*/
@@ -78,6 +78,7 @@
   }
   .menus button {
     color: white;
+    font-size: larger;
   }
 }
 
