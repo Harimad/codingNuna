@@ -10,9 +10,10 @@ const $searchBtn = document.querySelector('#searchBtn');
 const $pagination = document.querySelector('#pagination');
 
 let news = [];
-let url = new URL(
-  `https://newsapi.org/v2/top-headlines?country=kr&apiKey=b6bbde9962c04a399eba8cf8535ae9aa`
-);
+// let url = new URL(
+//   `https://newsapi.org/v2/top-headlines?country=kr&apiKey=b6bbde9962c04a399eba8cf8535ae9aa`
+// );
+let url = ``;
 let category;
 let search;
 
@@ -157,10 +158,9 @@ const getNewsBySearch = () => {
   page = 1; // 9. 새로운거 search마다 1로 리셋
   search = $searchInput.value.trim();
   url = `https://newsapi.org/v2/top-headlines?
-	q=${search}
-	&country=kr
-	&pageSize=10
-	&apiKey=b6bbde9962c04a399eba8cf8535ae9aa`;
+  &q=${search}
+  &pageSize=10
+  &apiKey=b6bbde9962c04a399eba8cf8535ae9aa`;
 
   getNews();
   searchInputFunc();
