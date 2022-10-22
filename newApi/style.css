@@ -13,7 +13,6 @@
 }
 .searchArea {
   display: none;
-  padding: 3px;
 }
 .head-line {
   margin-top: 1em;
@@ -47,8 +46,10 @@
 .menus button:hover {
   background-color: beige;
 }
+
 .news {
   border-bottom: 2px solid black;
+  margin: 1rem 0;
 }
 
 .news-img {
