@@ -5,10 +5,13 @@ const $menus = document.querySelector('#menus');
 const $searchArea = document.querySelector('#searchArea');
 const $articles = document.querySelector('#articles');
 const $categories = document.querySelectorAll('#menus .category');
+const $searchInput = document.querySelector('#searchInput');
+const $searchBtn = document.querySelector('#searchBtn');
 
 let news = [];
 let url;
 let category;
+let search;
 
 /*
 1. 사이드 메뉴
@@ -81,6 +84,12 @@ function dateFormat() {
   return `${today.getFullYear()}-${month}-${day}`;
 }
 
+// After Input, clear & focus
+const searchInputFunc = () => {
+  $searchInput.value = '';
+  $searchInput.focus();
+};
+
 const getNews = async () => {
   let req = new URL(url);
   let response = await fetch(req);
@@ -91,7 +100,7 @@ const getNews = async () => {
   render();
 };
 
-const getLatestNews = async () => {
+const getLatestNews = () => {
   url =
     'https://newsapi.org/v2/everything?' +
     'q=Apple&' +
@@ -105,7 +114,6 @@ getLatestNews();
 
 const getNewsByCategory = e => {
   category = e.target.textContent.toLowerCase();
-  console.log(category);
   url = `
 		https://newsapi.org/v2/top-headlines
 		?country=kr
@@ -116,9 +124,29 @@ const getNewsByCategory = e => {
   getNews();
 };
 
+const getNewsBySearch = () => {
+  search = $searchInput.value.trim();
+  url =
+    'https://newsapi.org/v2/everything?' +
+    `q=${search}&` +
+    `from=${dateFormat()}&` +
+    'sortBy=popularity&' +
+    'apiKey=2431d4c166fb4546a136e11ab9ca36ed';
+
+  getNews();
+  searchInputFunc();
+};
+
 // menus 버튼을 누르면 카테고리별로 뉴스 보여주기
 $categories.forEach(item => {
   item.addEventListener('click', e => {
     getNewsByCategory(e);
   });
+});
+
+$searchBtn.addEventListener('click', getNewsBySearch);
+$searchInput.addEventListener('keyup', e => {
+  if (e.code === 'Enter') {
+    getNewsBySearch();
+  }
 });
